@@ -119,7 +119,7 @@ stages:
               displayName: Terraform Init
               inputs:
                 command: 'init'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 backendType: 'azurerm'
                 backendServiceArm: 'Test-SC'
                 backendAzureRmResourceGroupName: 'terraform-storage-rg'
