@@ -134,5 +134,10 @@ stages:
                 command: 'destroy'
                 commandOptions: '-lock=false'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                environmentServiceName: 'Test-SC'
+                backendType: 'azurerm'
+                backendServiceArm: 'Test-SC'
+                backendAzureRmResourceGroupName: 'terraform-storage-rg'
+                backendAzureRmStorageAccountName: 'terraformstatesamuel'
+                backendAzureRmContainerName: 'tfstatefiles'
+                backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
                 allowTelemetryCollection: false
