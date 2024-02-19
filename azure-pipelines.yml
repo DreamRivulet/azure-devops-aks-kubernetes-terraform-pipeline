@@ -178,7 +178,7 @@ stages:
                 allowTelemetryCollection: false
 
     - deployment: DestroyQAAKSCluster
-      dependsOn: DeployQAAKSCluster
+      #dependsOn: DeployQAAKSCluster
       displayName: DestroyQAAKSCluster
       pool:
         vmImage: 'ubuntu-latest'
