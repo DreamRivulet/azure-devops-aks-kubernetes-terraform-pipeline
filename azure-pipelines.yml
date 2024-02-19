@@ -169,6 +169,19 @@ stages:
           deploy:
             steps:
             - task: TerraformCLI@0
+              displayName: Terraform Init
+              inputs:
+                command: 'init'
+                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                backendType: 'azurerm'
+                backendServiceArm: 'Test-SC'
+                backendAzureRmResourceGroupName: 'terraform-storage-rg'
+                backendAzureRmStorageAccountName: 'terraformstatesamuel'
+                backendAzureRmContainerName: 'tfstatefiles'
+                backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
+                allowTelemetryCollection: false
+
+            - task: TerraformCLI@0
               displayName: Terraform Destroy
               inputs:
                 command: 'destroy'
@@ -185,7 +198,21 @@ stages:
       strategy:
         runOnce:
           deploy:
-            steps:            
+            steps:
+              
+            - task: TerraformCLI@0
+              displayName: Terraform Init
+              inputs:
+                command: 'init'
+                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                backendType: 'azurerm'
+                backendServiceArm: 'Test-SC'
+                backendAzureRmResourceGroupName: 'terraform-storage-rg'
+                backendAzureRmStorageAccountName: 'terraformstatesamuel'
+                backendAzureRmContainerName: 'tfstatefiles'
+                backendAzureRmKey: 'aks-$(QA_ENVIRONMENT).tfstate'
+                allowTelemetryCollection: false
+
             - task: TerraformCLI@0
               displayName: Terraform destroy
               inputs:
