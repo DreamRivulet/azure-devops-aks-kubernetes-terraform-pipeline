@@ -117,6 +117,8 @@ stages:
             steps:
             - task: TerraformCLI@0
               displayName: Terraform Init
+              env: 
+                TF_LOG: TRACE
               inputs:
                 command: 'init'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
@@ -130,10 +132,12 @@ stages:
 
             - task: TerraformCLI@0
               displayName: Terraform Destroy
+              env: 
+                TF_LOG: TRACE
               inputs:
                 command: 'destroy'
                 commandOptions: '-lock=false'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 backendType: 'azurerm'
                 backendServiceArm: 'Test-SC'
                 backendAzureRmResourceGroupName: 'terraform-storage-rg'
