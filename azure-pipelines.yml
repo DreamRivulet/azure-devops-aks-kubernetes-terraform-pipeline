@@ -184,7 +184,8 @@ stages:
             - task: TerraformCLI@0
               displayName: Terraform Destroy
               inputs:
-                command: 'destroy -lock=false'
+                command: 'destroy'
+                commandOptions: '-lock=false'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 environmentServiceName: 'Test-SC'
                 allowTelemetryCollection: false
@@ -216,7 +217,8 @@ stages:
             - task: TerraformCLI@0
               displayName: Terraform destroy
               inputs:
-                command: 'destroy -lock=false'
+                command: 'destroy'
+                commandOptions: '-lock=false'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 environmentServiceName: 'Test-SC'
                 allowTelemetryCollection: false
