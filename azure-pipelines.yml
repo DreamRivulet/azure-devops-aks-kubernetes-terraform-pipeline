@@ -167,14 +167,21 @@ stages:
       strategy:
         runOnce:
           deploy:
-            steps:            
+            steps:
+            - task: ManualValidation@0
+              timeoutInMinutes: 1440 # task times out in 1 day
+              inputs:
+                notifyUsers: |
+                  xudin@microsoft.com
+                instructions: 'Please validate the destroy plan and resume'
+                onTimeout: 'resume'
+        
             - task: TerraformCLI@0
               displayName: Terraform Destroy
               inputs:
                 command: 'destroy'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 environmentServiceName: 'Test-SC'
-                commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
 
     - deployment: DestroyQAAKSCluster
@@ -193,5 +200,4 @@ stages:
                 command: 'destroy'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 environmentServiceName: 'Test-SC'
-                commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(QA_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
