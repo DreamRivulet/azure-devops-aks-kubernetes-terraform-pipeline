@@ -136,10 +136,10 @@ stages:
                 TF_LOG: TRACE
               inputs:
                 command: 'destroy'
-                commandOptions: '-lock=false'
+                commandOptions: '-lock=false -var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT)'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 backendType: 'azurerm'
-                backendServiceArm: 'Test-SC'
+                environmentServiceName: 'Test-SC'
                 backendAzureRmResourceGroupName: 'terraform-storage-rg'
                 backendAzureRmStorageAccountName: 'terraformstatesamuel'
                 backendAzureRmContainerName: 'tfstatefiles'
