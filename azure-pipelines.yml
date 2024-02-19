@@ -180,7 +180,7 @@ stages:
               displayName: Terraform Destroy
               inputs:
                 command: 'destroy'
-                workingDirectory: '$(Pipeline.Workspace)/'
+                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 environmentServiceName: 'Test-SC'
                 allowTelemetryCollection: false
 
@@ -198,6 +198,6 @@ stages:
               displayName: Terraform destroy
               inputs:
                 command: 'destroy'
-                workingDirectory: '$(Pipeline.Workspace)/'
+                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 environmentServiceName: 'Test-SC'
                 allowTelemetryCollection: false
