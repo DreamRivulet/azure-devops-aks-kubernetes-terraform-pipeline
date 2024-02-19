@@ -154,3 +154,44 @@ stages:
                 environmentServiceName: 'Test-SC'
                 commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(QA_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
+
+
+- stage: DestroyAKSClusters
+  jobs:
+    - deployment: DestroyDevClusters
+      dependsOn: DeployDevAKSCluster
+      displayName: DestroyDevClusters
+      pool:
+        vmImage: 'ubuntu-latest'
+      environment: $(DEV_ENVIRONMENT)      
+      strategy:
+        runOnce:
+          deploy:
+            steps:            
+            - task: TerraformCLI@0
+              displayName: Terraform Destroy
+              inputs:
+                command: 'destroy'
+                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                environmentServiceName: 'Test-SC'
+                commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
+                allowTelemetryCollection: false
+
+    - deployment: DestroyQAAKSCluster
+      dependsOn: DeployQAAKSCluster
+      displayName: DestroyQAAKSCluster
+      pool:
+        vmImage: 'ubuntu-latest'
+      environment: $(QA_ENVIRONMENT)      
+      strategy:
+        runOnce:
+          deploy:
+            steps:            
+            - task: TerraformCLI@0
+              displayName: Terraform destroy
+              inputs:
+                command: 'destroy'
+                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                environmentServiceName: 'Test-SC'
+                commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(QA_ENVIRONMENT)-$(Build.BuildId).out'
+                allowTelemetryCollection: false
