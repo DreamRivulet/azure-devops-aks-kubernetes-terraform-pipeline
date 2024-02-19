@@ -159,7 +159,7 @@ stages:
 - stage: DestroyAKSClusters
   jobs:
     - deployment: DestroyDevClusters
-      dependsOn: DeployDevAKSCluster
+      #dependsOn: DeployDevAKSCluster
       displayName: DestroyDevClusters
       pool:
         vmImage: 'ubuntu-latest'
