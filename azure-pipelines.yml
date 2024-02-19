@@ -168,14 +168,6 @@ stages:
         runOnce:
           deploy:
             steps:
-            - task: ManualValidation@0
-              timeoutInMinutes: 1440 # task times out in 1 day
-              inputs:
-                notifyUsers: |
-                  xudin@microsoft.com
-                instructions: 'Please validate the destroy plan and resume'
-                onTimeout: 'resume'
-        
             - task: TerraformCLI@0
               displayName: Terraform Destroy
               inputs:
