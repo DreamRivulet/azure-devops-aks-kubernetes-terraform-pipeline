@@ -142,7 +142,7 @@ stages:
                 TF_LOG: TRACE
               inputs:
                 command: 'destroy'
-                  commandOptions: '-lock=false -var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT)'
+                commandOptions: '-lock=false -var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT)'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                 backendType: 'azurerm'
                 environmentServiceName: 'Test-SC'
