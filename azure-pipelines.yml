@@ -29,7 +29,7 @@ stages:
       - task: PublishPipelineArtifact@1
         displayName: Publish K8s Artifacts
         inputs:
-            targetPath: '$(System.DefaultWorkingDirectory)/k8s-manifests'
+            targetPath: '$(System.DefaultWorkingDirectory)/k8s-manifest'
             artifact: 'k8s-manifests-out'
             publishLocation: 'pipeline'
       - task: TerraformInstaller@0
