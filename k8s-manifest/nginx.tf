@@ -29,7 +29,7 @@ provider "azurerm" {
 }
 
 data "azurerm_kubernetes_cluster" "cluster" {
-  name                = data.terraform_remote_state.aks.outputs.kubernetes_cluster_name
+  name                = data.terraform_remote_state.aks.outputs.name
   resource_group_name = data.terraform_remote_state.aks.outputs.resource_group_name
 }
 
