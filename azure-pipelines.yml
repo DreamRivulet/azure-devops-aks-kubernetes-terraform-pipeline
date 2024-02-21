@@ -26,6 +26,12 @@ stages:
           targetPath: '$(System.DefaultWorkingDirectory)/terraform-manifests'
           artifact: 'terraform-manifests-out'
           publishLocation: 'pipeline'
+      - task: PublishPipelineArtifact@1
+        displayName: Publish K8s Artifacts
+        inputs:
+            targetPath: '$(System.DefaultWorkingDirectory)/k8s-manifests'
+            artifact: 'k8s-manifests-out'
+            publishLocation: 'pipeline'
       - task: TerraformInstaller@0
         displayName: Terraform Install
         inputs:
@@ -42,6 +48,7 @@ stages:
           backendAzureRmContainerName: 'tfstatefiles'
           backendAzureRmKey: 'aks-base.tfstate'
           allowTelemetryCollection: false
+      
       - task: TerraformCLI@0
         displayName: Terraform Validate
         inputs:
@@ -120,7 +127,7 @@ stages:
                 TF_LOG: TRACE
               inputs:
                 command: 'init'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/k8s-manifest'
+                workingDirectory: '$(Pipeline.Workspace)/k8s-manifests-out'
                 backendType: 'azurerm'
                 backendServiceArm: 'Test-SC'
                 backendAzureRmResourceGroupName: 'terraform-storage-rg'
@@ -134,7 +141,7 @@ stages:
                 TF_LOG: TRACE
               inputs:
                 command: 'apply'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/k8s-manifest'
+                workingDirectory: '$(Pipeline.Workspace)/k8s-manifests-out'
                 environmentServiceName: 'Test-SC'
                 #commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
