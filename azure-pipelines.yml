@@ -103,6 +103,42 @@ stages:
                 allowTelemetryCollection: false
 
 
+- stage: DeployIngress
+  jobs:
+    - deployment: DeployIngress
+      displayName: DeployIngress
+      pool:
+        vmImage: 'ubuntu-latest'
+      environment: $(DEV_ENVIRONMENT)      
+      strategy:
+        runOnce:
+          deploy:
+            steps:            
+            - task: TerraformCLI@0
+              displayName: Terraform Init
+              env: 
+                TF_LOG: TRACE
+              inputs:
+                command: 'init'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/k8s-manifest'
+                backendType: 'azurerm'
+                backendServiceArm: 'Test-SC'
+                backendAzureRmResourceGroupName: 'terraform-storage-rg'
+                backendAzureRmStorageAccountName: 'terraformstatesamuel'
+                backendAzureRmContainerName: 'tfstatefiles'
+                backendAzureRmKey: 'aks-ingress.tfstate'
+                allowTelemetryCollection: false
+            - task: TerraformCLI@0
+              displayName: Terraform Apply
+              env: 
+                TF_LOG: TRACE
+              inputs:
+                command: 'apply'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/k8s-manifest'
+                environmentServiceName: 'Test-SC'
+                #commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
+                allowTelemetryCollection: false
+
 - stage: DestroyAKSClusters
   jobs:
     - deployment: DestroyDevClusters
